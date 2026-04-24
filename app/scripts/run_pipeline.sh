@@ -1,18 +1,19 @@
 #!/bin/sh
-set -e # Stopper skriptet umiddelbart ved feil
+set -e
 
-echo "--- Sentinel Pipeline Starter ---"
+echo "--- Sentinel Pipeline Starter (Ryddig Modus) ---"
 
-# 1. Bygg
-javac ModelExtractor.java ModelTest.java
+# Gå til app-roten hvis vi er i scripts
+cd "$(dirname "$0")/.."
 
-# 2. Kjør Logikk
-java ModelExtractor
+# 1. Kompiler
+javac src/ModelExtractor.java src/ModelTest.java
 
-# 3. KJØR TEST
-java ModelTest
+# 2. Kjør
+java -cp src ModelExtractor
+java -cp src ModelTest
 
-# 4. Kjør Rapportering (skjer kun hvis testen passerer)
-node report_generator.js
+# 3. Rapport
+node scripts/report_generator.js
 
 echo "--- Pipeline Fullført ---"
