@@ -9,7 +9,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    # Sett arbeidskatalog til app-mappen der koden ligger
     defaults:
       run:
         working-directory: ./app
@@ -30,14 +29,20 @@ jobs:
 
     - name: Run Build, Logic and Tests
       run: |
-        echo "Kompilerer Java-kildekode..."
-        javac ModelExtractor.java ModelTest.java
+        echo "Kompilerer Java fra src/..."
+        javac src/ModelExtractor.java src/ModelTest.java
         
         echo "Kjører hovedlogikk..."
-        java ModelExtractor
+        java -cp src ModelExtractor
         
         echo "Kjører valideringstest..."
-        java ModelTest
+        java -cp src ModelTest
         
-        echo "Kjører rapportgenerering..."
-        node report_generator.js
+        echo "Kjører rapportgenerering fra scripts/..."
+        node scripts/report_generator.js
+
+    - name: Upload Report Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: pipeline-report
+        path: app/output/
