@@ -9,6 +9,11 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    # Sett arbeidskatalog til app-mappen der koden ligger
+    defaults:
+      run:
+        working-directory: ./app
+    
     steps:
     - uses: actions/checkout@v3
     
@@ -23,7 +28,16 @@ jobs:
       with:
         node-version: '18'
 
-    - name: Build and Test
+    - name: Run Build, Logic and Tests
       run: |
-        echo "Kjører automatiserte tester..."
-        # Her legger vi inn faktiske test-kommandoer senere
+        echo "Kompilerer Java-kildekode..."
+        javac ModelExtractor.java ModelTest.java
+        
+        echo "Kjører hovedlogikk..."
+        java ModelExtractor
+        
+        echo "Kjører valideringstest..."
+        java ModelTest
+        
+        echo "Kjører rapportgenerering..."
+        node report_generator.js
