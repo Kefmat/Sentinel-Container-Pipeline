@@ -1,18 +1,25 @@
 const fs = require('fs');
+const path = require('path');
 
-console.log("[NODE] Genererer rapport basert på Java-data...");
+const outputDir = path.join(__dirname, 'output');
+
+if (!fs.existsSync(outputDir)) fs.mkdirSync(outputDir);
 
 try {
-    const rawData = fs.readFileSync('output.json');
-    const data = JSON.parse(rawData);
+    const data = JSON.parse(fs.readFileSync('output.json', 'utf8'));
 
-    console.log("-------------------------------");
-    console.log(`Systemstatus: ${data.status}`);
-    console.log(`Antall Noder: ${data.nodes}`);
-    console.log(`Sikkerhetsscore: ${data.security_score}%`);
-    console.log("-------------------------------");
-    
-    console.log("[NODE] Rapportering fullført.");
+    let html = fs.readFileSync('template.html', 'utf8');
+
+    html = html.replace('{{status}}', data.status)
+               .replace('{{nodes}}', data.nodes)
+               .replace('{{score}}', data.security_score)
+               .replace('{{timestamp}}', new Date().toLocaleString());
+
+    fs.writeFileSync(path.join(outputDir, 'index.html'), html);
+    fs.copyFileSync('style.css', path.join(outputDir, 'style.css'));
+
+    console.log("[NODE] Dashboard er generert med ekstern CSS!");
 } catch (err) {
-    console.error("[NODE] Kunne ikke lese data fra Java: ", err.message);
+    console.error("[NODE] Feil:", err.message);
+    process.exit(1);
 }
