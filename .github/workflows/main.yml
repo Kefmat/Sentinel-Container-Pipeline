@@ -28,17 +28,21 @@ jobs:
         node-version: '18'
 
     - name: Run Build, Logic and Tests
+      env:
+        SENTINEL_STATUS: "Operasjonell"
+        SENTINEL_NODES: 12
+        SENTINEL_SCORE: 88
       run: |
-        echo "Kompilerer Java fra src/..."
+        echo "[CI] Kompilerer Java-kildekode..."
         javac src/ModelExtractor.java src/ModelTest.java
         
-        echo "Kjører hovedlogikk..."
+        echo "[CI] Genererer systemdata..."
         java -cp src ModelExtractor
         
-        echo "Kjører valideringstest..."
+        echo "[CI] Utforer valideringstester..."
         java -cp src ModelTest
         
-        echo "Kjører rapportgenerering fra scripts/..."
+        echo "[CI] Genererer visuelt dashboard..."
         node scripts/report_generator.js
 
     - name: Upload Report Artifact
