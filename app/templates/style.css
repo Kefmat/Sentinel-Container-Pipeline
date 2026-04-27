@@ -18,6 +18,15 @@ body {
     width: 400px;
 }
 
+/* Status-variasjoner */
+.card.success { border-left: 8px solid #10b981; } /* Grønn */
+.card.warning { border-left: 8px solid #f59e0b; } /* Gul/Oransje */
+.card.danger  { border-left: 8px solid #ef4444; } /* Rød */
+
+.value.success { color: #34d399; }
+.value.warning { color: #fbbf24; }
+.value.danger  { color: #f87171; }
+
 h1 {
     margin-top: 0;
     font-size: 1.5rem;
