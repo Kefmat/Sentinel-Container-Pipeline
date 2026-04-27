@@ -1,17 +1,20 @@
-# Bruker en lettvekt Java-base
+# Bruk et bilde som har Java installert
 FROM eclipse-temurin:17-jdk-alpine
 
-# Installerer Node.js og npm
-RUN apk add --no-cache nodejs npm
+# Installer Node.js (alpine bruker apk som pakkebehandler)
+RUN apk add --no-cache nodejs
 
-# Mappe for applikasjonen
+# Sett arbeidskatalog inne i containeren
 WORKDIR /app
 
-# Kopier ALT fra app-mappen inn til containeren
-COPY ./app/ .
+# Kopier filene fra app-mappen på din PC til /app i containeren
+COPY ./app .
 
-# Gjør skriptet kjørbart (Linux/Docker)
-RUN chmod +x run_pipeline.sh
+# Kompiler Java-filene under bygging
+RUN javac src/ModelExtractor.java src/ModelTest.java
 
-# Kjører skriptet
-CMD ["sh", "./run_pipeline.sh"]
+# Gjør skriptet kjørbart
+RUN chmod +x scripts/run_pipeline.sh
+
+# Kommandoen som kjøres når containeren starter
+CMD ["sh", "scripts/run_pipeline.sh"]
