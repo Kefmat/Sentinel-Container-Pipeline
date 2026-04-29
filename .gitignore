@@ -1,0 +1,17 @@
+# Midlertidige filer og logger
+*.log
+output.json
+.history/
+
+# Java: Ikke lagre kompilerte filer (kun kildekoden .java)
+*.class
+
+# Node.js: Ikke lagre nedlastede pakker
+node_modules/
+
+# Utdata: Vil ikke ha de genererte rapportene i Git
+app/output/
+
+# OS-filer
+.DS_Store
+Thumbs.db
