@@ -36,7 +36,7 @@ public class ModelTest {
 
         } catch (Exception e) {
             System.err.println("[TEST] FEIL: " + e.getMessage());
-            System.exit(1); // Stopper hele pipelinen
+            System.exit(1); 
         }
     }
 }
