@@ -43,7 +43,13 @@ Systemet støtter miljøvariabler, slik at man kan simulere ulike sikkerhetsscen
 *   Antall noder er negativt.
 *   Nødvendige datafiler mangler.
 
+## Demo (Snapshot)
+
+
 ## Installasjon og kjøring
+
+<img width="751" height="467" alt="image" src="https://github.com/user-attachments/assets/9e0ddb18-2b07-4475-a3f2-ced63ec05c37" />
+
 
 ### Med Docker 
 For å bygge og kjøre hele pipelinen i en isolert container:
